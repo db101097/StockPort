@@ -4,3 +4,4 @@ let app = express()
 
 app.use(bodyParser.json());
 
+module.exports = app;

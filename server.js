@@ -4,7 +4,7 @@
 //
 
 const app = require('./app')
-let dotenv = require('dotenv').config()
+const dotenv = require('dotenv').config()
 const port = process.env.PORT
 
 app.listen(port, function() {

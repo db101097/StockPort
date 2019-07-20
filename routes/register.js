@@ -1,4 +1,4 @@
-const bcrypt = require('bcryptjs')
+const bcrypt = require('bcrypt')
 const jwt=require('jsonwebtoken')
 
 /*
@@ -23,18 +23,26 @@ function userExist(email){
 }
 
 /*
-    The function takes in a form object then
+    The function takes in a fuser object then
     it will use the validatejs library to validate
     the data to make sure no bad data is able to make
     it to the database.
 */
-function validate(form){
+function validate(user){
 
 }
 
-module.exports=function(user,app){
+module.exports=function(app,user){
 
-    app.get("/register",async function (req,res){
-          
+    //register a user route
+    app.post("/register",async function (req,res){
+        let user = {
+            firstName:req.body.firstName,
+            lastName:req.body.lastName,
+            email:req.body.email,
+            password:req.body.password
+        }
+
+        res.status(200).send({msg:user})
     })
 }

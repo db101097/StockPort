@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {validateForm} from './validate';
 import '../styles/Register.css';
+import axios from 'axios'
 
 class Register extends Component{
 
@@ -17,6 +18,7 @@ class Register extends Component{
         }
 
         this.handleInput= this.handleInput.bind(this)
+        this.registerUser = this.registerUser.bind(this)
     }
 
     handleInput= (event) => {
@@ -25,6 +27,25 @@ class Register extends Component{
         });
     }
 
+
+     registerUser= async ()=>{
+
+        const config ={ 
+            method: 'post',
+            url: 'http://localhost:8080/register',
+            data: {
+                firstName: this.state.firstName,
+                lastName: this.state.lastName,
+                email:this.state.email,
+                password:this.state.password,
+                confirmPassword:this.state.confirmPassword
+            }
+        }
+    
+        let res = await axios(config)
+        console.log(res.data.msg)
+        return res;
+    }
 
     submit = async (e)=>{
         e.preventDefault();
@@ -42,6 +63,11 @@ class Register extends Component{
         }
         console.log(err)
         this.setState({error:err,invalid})
+        if(this.state.invalid===false){
+            let result=await this.registerUser()
+            alert(result.data.msg)
+        }
+
     }
 
 
@@ -68,10 +94,6 @@ class Register extends Component{
                     <br/>
                     <input type="password" name="password" className={this.state.error["password"].error ? "error" : ""} required onChange={this.handleInput}/>
                     <div class="error">{this.state.error["password"].error ? this.state.error["password"].msg : ""}</div>
-                    Confirm Password:
-                    <br/>
-                    <input type="password" name="confirmPassword" className={this.state.error["confirmPassword"].error ? "error" : ""}  required onChange={this.handleInput}/>
-                    <div class="error">{this.state.error["confirmPassword"].error ? this.state.error["confirmPassword"].msg : ""}</div>
                     </label>
                     <br/>
                     <input type="submit" value="Submit" required onClick={this.submit}/>
@@ -98,11 +120,7 @@ class Register extends Component{
                     <br/>
                     <input type="password" name="password" required onChange={this.handleInput}/>
                     <br/>
-                    Confirm Password:
-                    <br/>
-                    <input type="password" name="confirmPassword" required onChange={this.handleInput}/>
                     </label>
-                    <br/>
                     <input type="submit" value="Submit" required onClick={this.submit}/>
                     </form>
             )

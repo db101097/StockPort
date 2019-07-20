@@ -45,33 +45,16 @@ import validate from 'validator';
         }
     }
 
-    function validateConfirmPassword(password,confirmPassword){
-        if(password!==confirmPassword){
-            console.log('password function')
-            return error("Passwords do not match")
-        }
-        else{
-            return valid()
-        }
-    }
-
     export function validateForm (fieldName,field) {  
         switch(fieldName) {
             case "firstName":
                 return validateName(field)
-                break;
             case "lastName":
                 return validateName(field)
-                break;
             case "email":
                 return validateEmail(field)
-                break;
             case "password":
                 return validatePassword(field)
-                break;
-            case "confirmPassword":
-                return validateConfirmPassword(field)
-                break;
             default:
                 return valid()
         }

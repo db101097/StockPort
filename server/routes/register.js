@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt')
-const jwt=require('jsonwebtoken')
+const saltRounds = 10;
 
 /*
     The function takes in a password as
@@ -7,50 +7,70 @@ const jwt=require('jsonwebtoken')
     using bcrypt and then returned the hashed
     password
 */
-function createHash(pw){
-
+async function createHash(password){
+        try{
+            let hash= await bcrypt.hash(password,saltRounds)
+            return hash
+        }catch(err){
+            throw "Password cannot be hashed"
+        }
 }
 
-function insertUser(newUser){
-    newUser.save()
-        .then(()=>{
-            return "Success, your account has been created"
-        })
-        .catch((err)=>{
-            return "This account could not be created or already exists"
-        })
+/*
+    This function will take the validated user
+    object and then call the save function which will 
+    have the data persist in the database.
+*/
+async function insertUser(newUser){
+    try{
+        let result= await newUser.save()
+        return "Success, your account has been created"
+    }catch(err){
+        throw "Insert Failed"
+    }
 }
 
+/*
+    This function takes the user object created
+    it then runs the validators on it and return
+    true if it passes the tests or false if errors
+    exists
+*/
 async function validate(newUser){
     try{
-        let err = await newUser.validate()
-        console.log('error ',err)
+        let result = await newUser.validate()
         return true
     }
     catch(err){
-        console.log(err)
-        return false
+        console.log('errrrr',err)
+        throw "Failed Validation"
     }
 }
 
 /*
     The function takes in a user object and the
     user model then it will run validation on it.
-    If the data is valid it is inserted into the 
-    database
+    If the data is valid , then the password will
+    be hashed. Finally the the save() function is used
+    on the object to persist it to the database
 */
 async function createUser(user,userModel){
-        //create a userModel object with the values
-        let newUser=await userModel.build(user)
-        //validate the values of the new user
-        let valid = await validate(newUser)
 
-        if(valid===true){
-            let result=insertUser(newUser,userModel)
-            res.status(200).send(result)
-        }
-        else{
-            res.status(400).send("The account could not be created")
+        try{
+            //create a userModel object with the values
+            let newUser=await userModel.build(user)
+            //validate the values of the new user
+            let valid = await validate(newUser)
+            if(valid===true){
+                let hashedPassword=await createHash(newUser.password)
+                newUser.password=hashedPassword
+                let result=await insertUser(newUser,userModel)
+                console.log('result',result)
+                return "Success, Your Account Has Been Created"
+            }
+        }catch(err){
+            console.log('errorrr',err)
+            throw err
         }
 }
 
@@ -64,9 +84,12 @@ module.exports=function(app,userModel){
             email:req.body.email,
             password:req.body.password
         }
-
-        createUser(user,userModel)
-
-        res.status(200).send({msg:user})
+        try{
+            let result=await createUser(user,userModel)
+            res.status(200).send({msg:result})
+        }catch(err){
+            res.status(400).send({Error:"The Account Could Not Be Created or Already Exists"})
+        }
+        
     })
 }

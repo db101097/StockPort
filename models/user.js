@@ -18,6 +18,7 @@ module.exports=function(sequelize,Sequelize){
         email:{
             type:Sequelize.STRING,
             allowNull:false,
+            unique: true,
             validate:{
                 isEmail:true
            }
@@ -26,12 +27,13 @@ module.exports=function(sequelize,Sequelize){
             type:Sequelize.STRING,
             allowNull:false,
             validate:{
-                notEmpty:true
+                notEmpty:true,
+                is: [/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/]
            }
         }
     },{
         sequelize,
-        modelName:"student"
+        modelName:"User"
     })
     return User
 }

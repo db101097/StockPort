@@ -19,6 +19,6 @@ app.use(function(req, res, next) {
     res.header('Access-Control-Allow-Credentials', true);
     next();
 })
-
+console.log(models.user)
 const register = require("./routes/register")(app,models.user)
 module.exports = app;

@@ -11,7 +11,7 @@ import validate from 'validator';
 
     function valid(){
         return {
-            error:false,
+            error:"",
             msg:""
         }
     }
@@ -21,14 +21,14 @@ import validate from 'validator';
             return valid()
         }
         else{
-            return error('Name is invalid')
+            return error('Name Is Not Valid')
         }
     }
 
     function validateEmail(email){
         let re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         if(re.test(email)===false){
-            return error('Email is invalid')
+            return error('Email Is Not Valid')
         }
         else{
             return valid()
@@ -38,7 +38,7 @@ import validate from 'validator';
     function validatePassword(password){
         let regex=/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
         if(regex.test(password)===false){
-            return error("Password does not meet criteria")
+            return error("Password Must Be 8 Characters Long , Include a Capital Letter , a Lowercase Letter And A Special Character")
         }
         else{
             return valid()

@@ -1,7 +1,14 @@
 form input.error {
   border-color: red;
+  color:black;
 }
 
 .error{
  color:red;
+}
+
+.center-form{
+display: flex;
+justify-content: center;
+align-items: center;
 }

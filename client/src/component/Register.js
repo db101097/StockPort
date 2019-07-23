@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import {validateForm} from './validate';
-import '../styles/Register.css';
 import axios from 'axios'
-import Register2 from './Register2.0'
+import Form from './registerForm'
 
 class Register extends Component{
 
@@ -77,12 +76,12 @@ class Register extends Component{
         if(this.state.invalid===true){
             console.log('error render')
             return (
-                <Register2 submitHandler={this.submit} handleInput={this.handleInput} errors={this.state.error}/>
+                <Form submitHandler={this.submit} handleInput={this.handleInput} errors={this.state.error}/>
             )
         }
         else{
             return(
-                <Register2 submitHandler={this.submit} handleInput={this.handleInput} errors={this.state.error}/>
+                <Form submitHandler={this.submit} handleInput={this.handleInput} errors={this.state.error}/>
             )
 
     }

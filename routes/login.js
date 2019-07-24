@@ -5,10 +5,11 @@ const jwt = require('jsonwebtoken');
 
 */
 async function issueToken(user){
+    let pk=process.env.SECRET_KEY
     let token = await jwt.sign({
         name: user.firstName,
         id: user.id
-    }, "mykey", {expiresIn: "3 hours"});
+    }, pk, {expiresIn: "3 hours"});
     console.log(token);
     return token
 }

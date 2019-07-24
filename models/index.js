@@ -5,7 +5,10 @@ const sequelize = new Sequelize(process.env.DB_URI,{
   });
 
 const User = require('./user')(sequelize,Sequelize)
+const Balance=require('./balance')(sequelize,Sequelize)
 
+User.hasOne(Balance);
+Balance.belongsTo(User)
 sequelize
   .authenticate()
   .then(() => {
@@ -17,7 +20,8 @@ sequelize
 sequelize.sync()
 
 let models = {
-    user:User
+    user:User,
+    balance:Balance
 }
 
 module.exports=models;

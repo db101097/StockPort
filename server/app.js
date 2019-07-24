@@ -2,9 +2,11 @@ const bodyParser= require('body-parser')
 const express = require('express')
 const app = express()
 const models = require('./models/index')
-var cors = require('cors')
+const expressjwt = require("express-jwt")
+const dotenv = require('dotenv').config()
+const jwtCheck = expressjwt({secret:process.env.SECRET_KEY})
 
-const user=models.users
+
 app.use(bodyParser.json());
 app.use(function(req, res, next) {
     res.header('Access-Control-Allow-Origin', "http://localhost:3000");
@@ -20,6 +22,7 @@ app.use(function(req, res, next) {
     next();
 })
 console.log(models.user)
-const register = require("./routes/register")(app,models.user)
+const register = require("./routes/register")(app,models.user,models.balance)
 const login = require("./routes/login")(app,models.user)
+const stocks = require("./routes/stocks")(app,jwtCheck)
 module.exports = app;

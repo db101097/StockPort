@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt')
-const saltRounds = 10;
+const saltRounds = 12;
 
 /*
     The function takes in a password as
@@ -21,11 +21,18 @@ async function createHash(password){
     object and then call the save function which will 
     have the data persist in the database.
 */
-async function insertUser(newUser){
+async function insertUser(newUser,balanceModel){
     try{
         let result= await newUser.save()
+        if(result!=null){
+            let newUserBalance= await balanceModel.build({UserId:result.id,amount:5000.00})
+            let result2= await newUserBalance.save()
+            let r3 = await balanceModel.findOne({where:{UserId:49}})
+            console.log(r3)
+        }
         return "Success, your account has been created"
     }catch(err){
+        console.log(err)
         throw "Insert Failed"
     }
 }
@@ -54,7 +61,7 @@ async function validate(newUser){
     be hashed. Finally the the save() function is used
     on the object to persist it to the database
 */
-async function createUser(user,userModel){
+async function createUser(user,userModel,balanceModel){
 
         try{
             //create a userModel object with the values
@@ -64,7 +71,7 @@ async function createUser(user,userModel){
             if(valid===true){
                 let hashedPassword=await createHash(newUser.password)
                 newUser.password=hashedPassword
-                let result=await insertUser(newUser,userModel)
+                let result=await insertUser(newUser,balanceModel)
                 console.log('result',result)
                 return "Success, Your Account Has Been Created"
             }
@@ -74,7 +81,7 @@ async function createUser(user,userModel){
         }
 }
 
-module.exports=function(app,userModel){
+module.exports=function(app,userModel,balanceModel){
 
     //register a user route
     app.post("/register",async function (req,res){
@@ -85,7 +92,7 @@ module.exports=function(app,userModel){
             password:req.body.password
         }
         try{
-            let result=await createUser(user,userModel)
+            let result=await createUser(user,userModel,balanceModel)
             res.status(200).send({msg:result})
         }catch(err){
             res.status(400).send({Error:"The Account Could Not Be Created or Already Exists"})

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Form from './loginForm';
 import axios from 'axios';
-
+import {Route,Link} from 'react-router-dom'
 
 class login extends Component{
     constructor(props){
@@ -9,8 +9,9 @@ class login extends Component{
         this.state = {
             email:"",
             password:"",
-            invalid:false,
-            error:""
+            authorized:false,
+            error:"",
+            noAccount:false
         }
 
         this.handleInput= this.handleInput.bind(this)
@@ -33,17 +34,30 @@ class login extends Component{
                 password:this.state.password,
             }
         }
-    
-        let res = await axios(config)
-        console.log(res)
-        return res;
 
+        try{
+            let res=await axios(config)
+            this.setState({authorized:true})
+            console.log(res)
+        }catch(err){
+            console.log(err)
+            this.setState({error:"Info not valid"})
+        }
     }
 
     render(){
-        return(
-            <Form submitHandler={this.submit} handleInput={this.handleInput}/>
-        )
+        
+        if(this.state.authorized===true){
+            return(
+                <Link to ="/home"> </Link>
+            )
+        }
+
+        else{
+            return(
+                <Form submitHandler={this.submit} handleInput={this.handleInput} error={this.state.error} />
+            )
+        }
     }
 }
 

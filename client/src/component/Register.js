@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import {validateForm} from './validate';
 import axios from 'axios'
 import Form from './registerForm'
+import {Link} from 'react-router-dom'
+import { Redirect } from 'react-router'
 
 class Register extends Component{
 
@@ -14,7 +16,8 @@ class Register extends Component{
             password:"",
             confirmPassword:"",
             invalid:false,
-            error:""
+            error:"",
+            redirect:false
         }
 
         this.handleInput= this.handleInput.bind(this)
@@ -42,10 +45,13 @@ class Register extends Component{
                 confirmPassword:this.state.confirmPassword
             }
         }
-    
-        let res = await axios(config)
-        console.log(res.data.msg)
-        return res;
+        try{
+            let res = await axios(config)
+            console.log(res.data.msg)
+            return res;
+        }catch(err){
+            throw err
+        }
     }
 
     submit = async (e)=>{
@@ -63,28 +69,40 @@ class Register extends Component{
             }
         }
         console.log(err)
-        this.setState({error:err,invalid})
-        if(this.state.invalid===false){
-            let result=await this.registerUser()
-            alert(result.data.msg)
+        //this.setState({error:err,invalid})
+        if(invalid===false){
+            try{
+                let result=await this.registerUser()
+                this.setState({redirect:true})
+            }catch(err){
+                console.log(err)
+            }
+        }
+        else{
+            this.setState({error:err,invalid})
         }
 
     }
 
 
     render(){
-        if(this.state.invalid===true){
+        if(this.state.redirect===true){
+            return (
+                <Redirect to ="/Login"> </Redirect>
+            )
+        }
+        else if(this.state.invalid===true){
             console.log('error render')
             return (
                 <Form submitHandler={this.submit} handleInput={this.handleInput} errors={this.state.error}/>
             )
         }
         else{
+            console.log('Regular form')
             return(
                 <Form submitHandler={this.submit} handleInput={this.handleInput} errors={this.state.error}/>
             )
-
-    }
+        }
 }
 
 }

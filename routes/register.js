@@ -27,8 +27,6 @@ async function insertUser(newUser,balanceModel){
         if(result!=null){
             let newUserBalance= await balanceModel.build({UserId:result.id,amount:5000.00})
             let result2= await newUserBalance.save()
-            let r3 = await balanceModel.findOne({where:{UserId:49}})
-            console.log(r3)
         }
         return "Success, your account has been created"
     }catch(err){

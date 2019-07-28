@@ -60,6 +60,7 @@ async function updateBalance(transaction,balanceModel){
 
 module.exports=function(app,balanceModel){
 
+    //retrieve the balance for a user
     app.get("/balance/:id",async function (req,res){
         let id=req.params.id
         try{
@@ -71,6 +72,7 @@ module.exports=function(app,balanceModel){
         }       
     })
 
+    //make purchases 
     app.put("/purchase",async function (req,res){
         let transaction = {
             id:req.body.id,

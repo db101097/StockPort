@@ -81,7 +81,6 @@ async function createUser(user,userModel,balanceModel){
 
 module.exports=function(app,userModel,balanceModel){
 
-    //register a user route
     app.post("/register",async function (req,res){
         let user = {
             firstName:req.body.firstName,

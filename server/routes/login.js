@@ -49,8 +49,8 @@ async function findUser(form,userModel){
                 return false
             }
             else{
-                console.log('Token issued')
-                return issueToken(user)
+                let userToken=await issueToken(user)
+                return {token:userToken,userID:user.id}
             }
         }
         else{
@@ -65,7 +65,6 @@ async function findUser(form,userModel){
 
 module.exports=function(app,userModel){
 
-    //register a user route
     app.post("/login",async function (req,res){
         let form={
             email:req.body.email,
@@ -77,7 +76,7 @@ module.exports=function(app,userModel){
                 throw 'Invalid Email Password Combination'
             }
             console.log('returning ',result)
-            res.status(200).send({token:result})
+            res.status(200).send(result)
         }catch(err){
             console.log('result error',err)
             res.status(400).send(err)

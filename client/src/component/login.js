@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Form from './loginForm';
 import axios from 'axios';
-import {Route,Link} from 'react-router-dom'
+import { Redirect } from 'react-router'
 
 class login extends Component{
     constructor(props){
@@ -49,7 +49,7 @@ class login extends Component{
         
         if(this.state.authorized===true){
             return(
-                <Link to ="/home"> </Link>
+                <Redirect to ="/home"> </Redirect>
             )
         }
 

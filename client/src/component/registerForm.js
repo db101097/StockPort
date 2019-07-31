@@ -119,7 +119,7 @@ export default function SignUp(props) {
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-            <NavLink to='/Login'>
+          <NavLink to='/Login'>
                 Already have an account? Sign in
               </NavLink>
             </Grid>

@@ -9,7 +9,6 @@ class App extends Component {
     return (
       <Router>
       <div>
-      <Navbar/>
       <Switch>
       <Route exact path="/" component={Login}/>
       <Route exact path="/Login" component={Login}/>

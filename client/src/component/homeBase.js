@@ -3,8 +3,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Panel from './panel'
-import Stocks from './StockSearch'
-import Balance from './balance';
+import Stocks from './stock/StockSearch'
+import Balance from './balance/balance';
 import Ex from './ex';
 
 const useStyles = makeStyles(theme => ({

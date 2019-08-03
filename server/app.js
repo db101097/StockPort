@@ -22,8 +22,9 @@ app.use(function(req, res, next) {
     next();
 })
 console.log(models.user)
-const register = require("./routes/register")(app,models.user,models.balance)
-const login = require("./routes/login")(app,models.user)
-const balance = require("./routes/balance")(app,models.balance)
+const register = require("./routes/register")(app)
+const login = require("./routes/login")(app)
+const balance = require("./routes/balance")(app)
+const purchase = require("./routes/purchase")(app)
 const stocks = require("./routes/stocks")(app,jwtCheck)
 module.exports = app;

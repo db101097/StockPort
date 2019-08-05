@@ -1,6 +1,14 @@
+const stockModel = require('../utils/stockUtils')
 
-module.exports=function(app,auth){
-    app.get("/stocks",auth,(req,res)=>{
-        res.status(200).send("Authorized")
+module.exports=function(app){
+    app.get("/stocks/:id",async (req,res)=>{
+        try{
+            let allStocks= await stockModel.getAll(req.params.id)
+            console.log('all stocks is ',allStocks)
+            res.status(200).send(allStocks)
+        }catch(err){
+            res.status(400).send(err)
+        }
+        
     })
 }

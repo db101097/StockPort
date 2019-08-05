@@ -6,6 +6,9 @@ import Panel from './panel'
 import Stocks from './stock/StockSearch'
 import Balance from './balance/balance';
 import Ex from './ex';
+import Navbar from './Navbar'
+import Toolbar from '@material-ui/core/Toolbar'
+import Typography from '@material-ui/core/Typography'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -28,10 +31,14 @@ export default function FullWidthGrid() {
             justify="center"
             alignItems="centers"spacing={0}>
         <Grid item xs={11} sm={11} md={11} lg={11}>
-          <Paper className={classes.paper}>xs=12</Paper>
+            <Navbar/>
         </Grid>
-        <Grid item xs={11} sm={11} md={11} lg={11}>
-          <Paper className={classes.paper}>xs=12</Paper>
+        <Grid item xs={10} sm={10} md={10} lg={10}>
+        <Toolbar>
+                    <Typography variant="title" color="inherit">
+                        StockPort
+                    </Typography>
+        </Toolbar>
         </Grid>
         <Grid item xs={3} sm={3} md={3} lg={3}>
           <Balance/>

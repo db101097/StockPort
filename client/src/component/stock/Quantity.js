@@ -14,6 +14,7 @@ class SearchPage extends Component {
             error:false 
         }
         this.handleInput= this.handleInput.bind(this)
+        this.validate=this.validate.bind(this)
     }
 
     handleInput= (event) => {
@@ -21,39 +22,51 @@ class SearchPage extends Component {
             qty: event.target.value
         });
     }
+
     validate = ()=>{
-        if(typeof(this.state.qty)!=='number'){
+        console.log('Validate')
+        if(typeof(Number(this.state.qty))!=='number'){
+            console.log('not a number')
             return false
         }
 
-        else if(this.state.qty<1 || this.state.qty>this.props.qty || this.state.qty%1!==0){
+        else if(this.state.qty<1 || this.state.qty>this.props.maxsize || this.state.qty%1!==0){
+            console.log('Other erro')
             return false
         }
-
-        return true
+        else{
+            return true
+        }
     }
 
     makePurchase=async ()=>{
-        const config ={ 
-            method: 'get',
-            url: 'https://api.iextrading.com/1.0/tops?symbols='+this.state.ticker
+        try{
+            const config ={ 
+                method: 'put',
+                url: 'http://localhost:8080/purchase',
+                data:{
+                    "id":51,
+                    "costPerShare":this.props.price,
+                    "ticker":this.props.ticker,
+                    "qty":Number(this.state.qty)
+                }
+            }
+            console.log("costPerShare ",this.props.price,
+            "ticker ",this.props.ticker,
+            "qty ",this.state.qty)
+            let res=await axios(config)
+            console.log('Purchase ',res)
+            alert('Success you copped those stocks')
+        }catch(err){
+            console.log(err)
+            alert('Failed to cop those stocks')
         }
-
-        let res=await axios(config)
-        console.log(res)
     }
 
     buy = async (e)=>{
         e.preventDefault();
         try{
-            let valid=validate()
-            if(valid!==true){
-                throw Object.assign(
-                    new Error('Invalid Quantity'),
-                    { code: 400 }
-                 );
-            }
-            
+            this.makePurchase()
         }catch(err){
             console.log(err)
             let e = {
@@ -61,8 +74,7 @@ class SearchPage extends Component {
                 message:err
             }
             this.setState({error:e})
-        }
-        
+        } 
     }
 
     render(){

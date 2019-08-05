@@ -36,15 +36,15 @@ export default function ImgMediaCard(props) {
       <CardActionArea>
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
-            {props.title}
+            {'AA'}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            Ask Size: ${props.quantity}
+            Ask Size: {40}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            Ask Price: {props.cost}
+            Ask Price: ${23.56}
           </Typography>
-          <Quantity maxsize={props.quantity}/>
+          <Quantity maxsize={props.quantity} price={23.99} ticker={'AA'}/>
         </CardContent>
       </CardActionArea>
     </Card>

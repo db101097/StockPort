@@ -2,20 +2,10 @@ const balanceModel= require('../utils/balanceUtils')
 const stockModel = require('../utils/stockUtils')
 const transactionModel = require('../utils/transactionUtils')
 const model = require ('../models/index')
+const validate = require('../utils/validate')
 const sequelize = model.sequelize
 
-/*
-    This function will ensure the value passed 
-    as the amount the user wants to purchase is 
-    greater than 0 and is in fact a number value
-*/
-function validNumber(amount){
-    console.log('amount ',amount)
-    if(typeof(amount)!=="number" || amount<0){
-        throw "Invalid amount"
-    }
-    return true
-}
+
 
 async function makePurchase(request){
     let transaction;    
@@ -71,10 +61,8 @@ module.exports=function(app){
         }
 
         try{
-            let validCost=await validNumber(transaction.costPerShare)
-            let validQty=await validNumber(transaction.qty)
-            console.log('Valid cost ',validCost)
-            console.log('Valid qty ',validQty)
+            let validCost=await validate.validateMoney(transaction.costPerShare)
+            let validQty=await validate.validateQty(transaction.qty)
             let purchaseComplete= await makePurchase(transaction)
             res.status(200).send({msg:"Purchase Complete"})
         }catch(err){

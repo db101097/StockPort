@@ -26,5 +26,6 @@ const register = require("./routes/register")(app)
 const login = require("./routes/login")(app)
 const balance = require("./routes/balance")(app)
 const purchase = require("./routes/purchase")(app)
-const stocks = require("./routes/stocks")(app,jwtCheck)
+const stocks = require("./routes/stocks")(app)
+const transactions= require("./routes/transactions")(app)
 module.exports = app;

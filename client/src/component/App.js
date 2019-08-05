@@ -4,6 +4,7 @@ import Login from './login/login'
 import Navbar from "./Navbar"
 import Buy from "./stock/buy"
 import HomeBase from "./homeBase"
+import Transaction from "./transactions/transactions"
 import {BrowserRouter as Router , Switch, Route} from 'react-router-dom'
 class App extends Component {
   render(){
@@ -16,6 +17,7 @@ class App extends Component {
       <Route exact path="/Register" component={Register}/>
       <Route exact path="/home" component={HomeBase}/>
       <Route exact path="/buy" component={Buy}/>
+      <Route exact path="/transactions" component={Transaction}/>
       </Switch>
       </div>
       </Router>

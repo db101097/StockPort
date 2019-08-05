@@ -2,11 +2,19 @@ import React from 'react';
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
+import { makeStyles } from '@material-ui/core/styles';
 
-const navbar = () => {
+const useStyles = makeStyles({
+    root: {
+      flexGrow: 1,
+    },
+  });
+
+export default function SimpleAppBar() {
+    const classes = useStyles();
     return (
-        <div>
-            <AppBar positiion="static">
+        <div className={classes.root}>
+            <AppBar positiion="static"  style={{ background: '#216B18' }}>
                 <Toolbar>
                     <Typography variant="title" color="inherit">
                         StockPort
@@ -17,5 +25,3 @@ const navbar = () => {
 
     )
 }
-
-export default navbar;

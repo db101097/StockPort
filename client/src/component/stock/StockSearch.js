@@ -7,6 +7,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import axios from 'axios'
 import Ex from "../ex"
+import Button from '@material-ui/core/Button';
 
 class StockSearch extends Component{
     constructor(props){
@@ -41,7 +42,9 @@ class StockSearch extends Component{
                 <Typography gutterBottom variant="h5" component="h2">
                     Stocks
                 </Typography>
-                <SearchBar/>
+                <Button size="small" onClick={this.buy}>
+                     BUY
+                 </Button>s
                 </CardContent>
             </CardActionArea>
             </Card>

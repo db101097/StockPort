@@ -48,7 +48,7 @@ class SearchPage extends Component {
             this.setState({getInfo:true,stock:stock,error:false})
             console.log(res)
         }catch(err){
-            this.setState({error:true})
+            this.setState({error:false})
         }
     }
 

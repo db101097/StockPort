@@ -2,8 +2,10 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import Body from './paper'
+import Body from './stockbase'
 import Navbar from '../Navbar'
+import Toolbar from '@material-ui/core/Toolbar'
+import Typography from '@material-ui/core/Typography'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -26,10 +28,14 @@ export default function FullWidthGrid() {
             justify="center"
             alignItems="centers"spacing={0}>
         <Grid item xs={11} sm={11} md={11} lg={11}>
-          <Paper className={classes.paper}>xs=12</Paper>
+            <Navbar/>
         </Grid>
         <Grid item xs={11} sm={11} md={11} lg={11}>
-          <Paper className={classes.paper}>xs=12</Paper>
+        <Toolbar>
+                    <Typography variant="title" color="inherit">
+                        StockPort
+                    </Typography>
+        </Toolbar>
         </Grid>
         <Grid item xs={11} sm={11} md={11} lg={11}>
           <Body/>

@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import StockCard from './StockCard'
 import axios from 'axios';
+import Button from '@material-ui/core/Button';
 
 class SearchPage extends Component {
     constructor(props){
@@ -48,7 +49,7 @@ class SearchPage extends Component {
             this.setState({getInfo:true,stock:stock,error:false})
             console.log(res)
         }catch(err){
-            this.setState({error:false})
+            this.setState({error:true})
         }
     }
 
@@ -60,7 +61,9 @@ class SearchPage extends Component {
                         <div>
                         <form>
                         <input type="text" placeholder="Enter a Ticker Name" name="search" onChange={this.handleInput} />
-                        <button type="submit" onClick={this.findStock}/>
+                        <Button size="small" onClick={this.findStock}>
+                            Find
+                        </Button>
                         </form>
                         <StockCard error={true} errmsg={'This Stock Could Not Be Found'} />
                         </div>
@@ -71,7 +74,9 @@ class SearchPage extends Component {
                         <div>
                         <form>
                         <input type="text" placeholder="Enter a Ticker Name" name="search" onChange={this.handleInput} />
-                        <button type="submit" onClick={this.findStock}/>
+                        <Button size="small" onClick={this.findStock}>
+                            Find
+                        </Button>
                         </form>
                         <StockCard error={false} title={this.state.stock.symbol} cost={this.state.stock.price} quantity={this.state.stock.size} />
                         </div>
@@ -83,7 +88,9 @@ class SearchPage extends Component {
                 <div>
                 <form>
                 <input type="text" placeholder="Enter a Ticker Name" name="search" onChange={this.handleInput} />
-                <button type="submit" onClick={this.findStock}/>
+                <Button size="small" onClick={this.findStock}>
+                            Find
+                </Button>
                 </form>
                 </div>
             )

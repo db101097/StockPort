@@ -81,7 +81,7 @@ class SearchPage extends Component {
             return(
                 <div>
                 <form>
-                <input type="text" placeholder="Enter a Ticker Name" name="search" onChange={this.handleInput} />
+                <input type="text" placeholder="Enter a Quantity" name="search" onChange={this.handleInput} />
                 <Button size="small" onClick={this.buy}>
                      BUY
                  </Button>

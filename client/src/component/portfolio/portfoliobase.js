@@ -2,9 +2,8 @@ import React,{ useState, useEffect }from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import List from './ex'
 import Axios from 'axios';
-import ExpansionPanel from './expansion'
+import List from './list'
 const useStyles = makeStyles(theme => ({
   root: {
     padding: theme.spacing(3, 2),
@@ -45,15 +44,7 @@ const generateList=async()=>{
       for(let i=0;i<transactions.data.length;i++){
         let t=transactions.data[i]
         console.log('i ',i,'t ',t)
-        all.push(<ExpansionPanel 
-                    panel={'panel'+i} 
-                    ariaControl={'panel'+i+'bh-content'}
-                    ticker={t.ticker}
-                    type={t.type}
-                    total={t.total}
-                    shares={t.shares}
-                    cost={t.cost}
-                    date={t.date}   />)
+        all.push()
       }
 
       return all;
@@ -85,12 +76,12 @@ export default function PaperSheet() {
       <div>
         <Paper className={classes.root}>
           <Typography variant="h5" component="h3">
-            Transactions
+            Portfolio
           </Typography>
           <Typography component="p">
-            Your Transactions
+            Your Portfolio
           </Typography>
-          <List panel={list}/>
+          <List/>
         </Paper>
       </div>
     );

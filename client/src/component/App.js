@@ -5,6 +5,7 @@ import Navbar from "./Navbar"
 import Buy from "./stock/buy"
 import HomeBase from "./homeBase"
 import Transaction from "./transactions/transactions"
+import Portfolio from './portfolio/portfolio'
 import {BrowserRouter as Router , Switch, Route} from 'react-router-dom'
 class App extends Component {
   render(){
@@ -18,6 +19,7 @@ class App extends Component {
       <Route exact path="/home" component={HomeBase}/>
       <Route exact path="/buy" component={Buy}/>
       <Route exact path="/transactions" component={Transaction}/>
+      <Route exact path="/portfolio" component={Portfolio}/>
       </Switch>
       </div>
       </Router>

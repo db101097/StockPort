@@ -42,11 +42,11 @@ export default function ControlledExpansionPanels(props) {
         >
           <Typography className={classes.heading}>Ticker:{props.ticker}</Typography>
           <Typography className={classes.secondaryHeading}>Type:{props.type}</Typography>
-          <Typography className={classes.secondaryHeading}>Total:{props.total}</Typography>
+          <Typography className={classes.secondaryHeading}>Total:${props.total}</Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails className={classes.details}>
           <Typography >Shares:{props.shares}</Typography>
-          <Typography >Cost Per Share:{props.cost}</Typography>
+          <Typography >Cost Per Share:${props.cost}</Typography>
           <Typography >Date:{props.date}</Typography>
         </ExpansionPanelDetails>
       </ExpansionPanel>

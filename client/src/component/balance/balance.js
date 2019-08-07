@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import BalanceCard from "./quickcards"
 import axios from 'axios'
+import cookie from 'react-cookies';
 
 class Balance extends Component{
     constructor(props){
@@ -11,9 +12,13 @@ class Balance extends Component{
     }
 
     async componentDidMount(){
+        console.log(cookie.load('token'))
         const config ={ 
             method: 'get',
-            url: 'http://localhost:8080/balance/50'
+            url: 'http://localhost:8080/balance/'+cookie.load('user'),
+            headers: {
+                Authorization: "Bearer " + cookie.load('token')
+            }
         }
 
         try{

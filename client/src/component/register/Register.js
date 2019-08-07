@@ -4,6 +4,7 @@ import axios from 'axios'
 import Form from './registerForm'
 import {Link} from 'react-router-dom'
 import { Redirect } from 'react-router'
+import Alert from './Alert'
 
 class Register extends Component{
 
@@ -17,7 +18,8 @@ class Register extends Component{
             confirmPassword:"",
             invalid:false,
             error:"",
-            redirect:false
+            redirect:false,
+            failed:false
         }
 
         this.handleInput= this.handleInput.bind(this)
@@ -58,6 +60,7 @@ class Register extends Component{
         e.preventDefault();
         let err = new Map();
         let invalid=false;
+        this.setState({failed:false})
         const keys = Object.keys(this.state)
         for (const key of keys) {
             if(key!=="error" || key!=="count"){
@@ -76,6 +79,7 @@ class Register extends Component{
                 this.setState({redirect:true})
             }catch(err){
                 console.log(err)
+                this.setState({failed:true})
             }
         }
         else{
@@ -91,10 +95,20 @@ class Register extends Component{
                 <Redirect to ="/Login"> </Redirect>
             )
         }
+        else if(this.state.failed===true){
+            return(
+                <div>
+                    <Alert open={true}/>
+                    <Form submitHandler={this.submit} handleInput={this.handleInput} errors={this.state.error}/>
+                 </div>
+            )  
+        }
         else if(this.state.invalid===true){
             console.log('error render')
             return (
-                <Form submitHandler={this.submit} handleInput={this.handleInput} errors={this.state.error}/>
+                <div>
+                    <Form submitHandler={this.submit} handleInput={this.handleInput} errors={this.state.error}/>
+                </div>
             )
         }
         else{

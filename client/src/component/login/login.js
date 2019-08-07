@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Form from './loginForm';
 import axios from 'axios';
+import cookie from 'react-cookies';
 import { Redirect } from 'react-router'
 
 class login extends Component{
@@ -37,6 +38,8 @@ class login extends Component{
 
         try{
             let res=await axios(config)
+            cookie.save('token',res.data.token)
+            cookie.save('user',res.data.userID)
             this.setState({authorized:true})
             console.log(res)
         }catch(err){

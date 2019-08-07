@@ -5,6 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import List from './ex'
 import Axios from 'axios';
 import ExpansionPanel from './expansion'
+import cookie from 'react-cookies'
 const useStyles = makeStyles(theme => ({
   root: {
     padding: theme.spacing(3, 2),
@@ -17,7 +18,10 @@ const getData=async()=>{
     try{
         const config={
             method: 'get',
-            url: 'http://localhost:8080/transaction/51',
+            url: 'http://localhost:8080/transaction/'+cookie.load('user'),
+            headers: {
+              Authorization: "Bearer " + cookie.load('token')
+            }
         }
         let res=await Axios(config)
         console.log(res)
@@ -44,7 +48,6 @@ const generateList=async()=>{
       console.log('data is this long ',transactions.data.length)
       for(let i=0;i<transactions.data.length;i++){
         let t=transactions.data[i]
-        console.log('i ',i,'t ',t)
         all.push(<ExpansionPanel 
                     panel={'panel'+i} 
                     ariaControl={'panel'+i+'bh-content'}
@@ -71,9 +74,6 @@ export default function PaperSheet() {
         console.log('here')
         let data=async()=>{
             let res=await generateList()
-            res.forEach((l)=>{
-              console.log(l)
-            })  
             setList(res)
         }
         data()

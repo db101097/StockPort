@@ -49,10 +49,10 @@ async function makePurchase(request){
     }
 }
 
-module.exports=function(app){
+module.exports=function(app,auth){
     
     //make purchases 
-    app.put("/purchase",async function (req,res){
+    app.put("/purchase",auth,async function (req,res){
         let transaction = {
             id:req.body.id,
             costPerShare:req.body.costPerShare,
@@ -61,7 +61,7 @@ module.exports=function(app){
         }
 
         try{
-            let validCost=await validate.validateMoney(transaction.costPerShare)
+            let validCost=await validate.validateMoney(Number(transaction.costPerShare))
             let validQty=await validate.validateQty(transaction.qty)
             let purchaseComplete= await makePurchase(transaction)
             res.status(200).send({msg:"Purchase Complete"})

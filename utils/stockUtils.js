@@ -5,7 +5,7 @@ const stockModel=models.stock
 let getAllStocks= async (userId)=>{
     try{
         let stocks=await stockModel.findAll({where:{UserId:userId}})
-        console.log('Stocks is ',stocks)
+        //console.log('Stocks is ',stocks)
         if(stocks===null || stocks.length===0){
             throw 'No Stocks Found'
         }
@@ -18,12 +18,18 @@ let getAllStocks= async (userId)=>{
 
 let getOpeningPrice=async(ticker)=>{
     try{
-        let res=await axios.get('https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol='+ticker+'&apikey=KJDQPZ6RDZ5B2RP6')
-        console.log(res)
-        return {
-            openPrice:res.data['Global Quote']['02. open'],
-            currentPrice:res.data['Global Quote']["05. price"],
+        let res=await axios.get('https://api.worldtradingdata.com/api/v1/stock?symbol='+ticker+'&api_token=tKd4GiDqziKoCWoyWvlX3aTCTMl6ByQN2w7R1UHH5OVTkt2o7NgPgxZtAgf2')
+        let stocks = res.data.data
+        if(stocks===undefined){
+            console.log('here')
+            return false
         }
+        let obj={
+            openPrice:Number(stocks[0].price_open),
+            currentPrice:Number(stocks[0].price)
+        }
+        console.log('Object ',obj)
+        return obj
     }catch(err){
         console.log(err)
         throw 'Stock not found'
@@ -46,10 +52,17 @@ let getPortfolio = async(id)=>{
         let allStocks= await getAllStocks(id)
         let rows = new Array()
         for(let i=0;i<allStocks.length;i++){
+            console.log('symbol ',allStocks[i].ticker)
             let currData=await getOpeningPrice(allStocks[i].ticker)
-            let row= await createRow(allStocks[i],currData.openPrice,currData.currentPrice)
-            rows.push(row)
+            if(currData===false){
+                
+            }
+            else{
+                let row= await createRow(allStocks[i],currData.openPrice,currData.currentPrice)
+                rows.push(row)
+            }
         }
+        console.log('length of rows ',rows.length)
         return rows
     }catch(err){
         console.log(err)

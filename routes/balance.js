@@ -13,10 +13,10 @@ function validNumber(amount){
     return true
 }
 
-module.exports=function(app){
+module.exports=function(app,auth){
 
     //retrieve the balance for a user
-    app.get("/balance/:id",async function (req,res){
+    app.get("/balance/:id",auth,async function (req,res){
         let id=req.params.id
         try{
             let total=await balanceModel.retrieveBalance(id)

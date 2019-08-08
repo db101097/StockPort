@@ -6,6 +6,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
 import axios from 'axios'
 
 const StyledTableCell = withStyles(theme => ({
@@ -26,8 +27,8 @@ const StyledTableRow = withStyles(theme => ({
   },
 }))(TableRow);
 
-function createData(ticker,shares,total) {
-  return { ticker,shares,total };
+function createData(ticker,shares,total,openPrice,currentPrice,profit,color) {
+  return { ticker,shares,total,openPrice,currentPrice,profit,color };
 }
 
 const rows = [
@@ -52,6 +53,7 @@ async function getStocks(){
         }
         let res=await axios(config)
         let stocks=res.data
+        console.log(stocks)
         return stocks
     }catch(err){
         console.log(err)
@@ -64,25 +66,24 @@ async function generateRows(){
 
         let stocks= await getStocks()
         console.log('Stocks ',stocks)
-        let tickers=""
         for(let i=0;i<stocks.length;i++){
-            let t=stocks[i].ticker+','
-            tickers+=t
-            rows.push(createData(stocks[i].ticker,stocks[i].shares,stocks[i].total))
+            let color;
+            if(stocks[i].openPrice>stocks[i].currentPrice){
+              color='red'
+            }
+            else if(stocks[i].openPrice<stocks[i].currentPrice){
+              color='green'
+            }
+            else{
+              color='grey'
+            }
+            rows.push(createData(stocks[i].ticker,stocks[i].shares,stocks[i].total,stocks[i].openPrice,stocks[i].currentPrice,stocks[i].profit))
         }
 
         rows.forEach(row=>{
             console.log('Row ',row)
         })
         return rows
-        const config ={ 
-            method: 'get',
-            url: 'https://api.iextrading.com/1.0/tops?symbols='+tickers
-        }
-        let res=await axios(config)
-        let currData=res.data
-        console.log('current data ',res)
-        return res
     }catch(err){
         console.log(err)
         return false;
@@ -108,16 +109,26 @@ export default function CustomizedTables() {
             <StyledTableCell>Ticker </StyledTableCell>
             <StyledTableCell align="right">Shares</StyledTableCell>
             <StyledTableCell align="right">Total</StyledTableCell>
+            <StyledTableCell align="right">Open Price</StyledTableCell>
+            <StyledTableCell align="right">Current Price</StyledTableCell>
+            <StyledTableCell align="right">Profit</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {rows.map(row => (
             <StyledTableRow key={row.ticker}>
               <StyledTableCell component="th" scope="row">
+              <font color={'green'}>
                 {row.ticker}
+              </font>`
               </StyledTableCell>
-              <StyledTableCell align="right">{row.shares}</StyledTableCell>
-              <StyledTableCell align="right">{row.total}</StyledTableCell>
+              <StyledTableCell align="right">
+              {row.shares}
+              </StyledTableCell>
+              <StyledTableCell align="right">$ {row.total}</StyledTableCell>
+              <StyledTableCell align="right">$ {row.openPrice}</StyledTableCell>
+              <StyledTableCell align="right">$ {row.currentPrice}</StyledTableCell>
+              <StyledTableCell align="right">$ {row.profit}</StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>

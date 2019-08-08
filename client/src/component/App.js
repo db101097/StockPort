@@ -17,10 +17,10 @@ class App extends Component {
       <Route exact path="/" component={Login}/>
       <Route exact path="/Login" component={Login}/>
       <Route exact path="/Register" component={Register}/>
-      <Route exact path="/home" component={(props) => <Protected {...props} component={<HomeBase/>} />}/>
-      <Route exact path="/buy" component={(props) => <Protected {...props} component={<Buy/>} />}/>
-      <Route exact path="/transactions" render={(props) => <Protected {...props} component={<Transaction/>} />}/>
-      <Route exact path="/portfolio" component={(props) => <Protected {...props} component={<Portfolio/>} />}/>
+      <Route exact path="/home" component={(props) => <Protected {...props} component={<HomeBase/>} login={<Login/>}/>}/>
+      <Route exact path="/buy" component={(props) => <Protected {...props} component={<Buy/>} login={<Login/>}/>}/>
+      <Route exact path="/transactions" render={(props) => <Protected {...props} component={<Transaction/>} login={<Login/>}/>}/>
+      <Route exact path="/portfolio" component={(props) => <Protected {...props} component={<Portfolio/>} login={<Login/>} />}/>
       </Switch>
       </div>
       </Router>

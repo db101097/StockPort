@@ -1,4 +1,5 @@
 const models = require('../models/index')
+const axios = require('axios');
 const stockModel=models.stock
 
 let getAllStocks= async (userId)=>{
@@ -12,6 +13,47 @@ let getAllStocks= async (userId)=>{
     }catch(err){
         console.log(err)
         throw 'No Stocks Found'
+    }
+}
+
+let getOpeningPrice=async(ticker)=>{
+    try{
+        let res=await axios.get('https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol='+ticker+'&apikey=KJDQPZ6RDZ5B2RP6')
+        console.log(res)
+        return {
+            openPrice:res.data['Global Quote']['02. open'],
+            currentPrice:res.data['Global Quote']["05. price"],
+        }
+    }catch(err){
+        console.log(err)
+        throw 'Stock not found'
+    }
+}
+
+let createRow=async (stock,openPrice,currentPrice)=>{
+    return {
+        ticker:stock.ticker,
+        shares:stock.shares,
+        total:stock.total,
+        openPrice:openPrice,
+        currentPrice:currentPrice,
+        profit:(stock.shares*currentPrice)-stock.total
+    }
+}
+
+let getPortfolio = async(id)=>{
+    try{
+        let allStocks= await getAllStocks(id)
+        let rows = new Array()
+        for(let i=0;i<allStocks.length;i++){
+            let currData=await getOpeningPrice(allStocks[i].ticker)
+            let row= await createRow(allStocks[i],currData.openPrice,currData.currentPrice)
+            rows.push(row)
+        }
+        return rows
+    }catch(err){
+        console.log(err)
+        throw 'Failed To Get Portfolio'
     }
 }
 
@@ -64,7 +106,8 @@ let addStock=async function addStock(stock,userID,transaction){
 
 let functions = {
     add:addStock,
-    getAll:getAllStocks
+    getAll:getAllStocks,
+    getPortfolio:getPortfolio
 }
 
 module.exports=functions

@@ -1,7 +1,7 @@
 const transactionModel = require('../utils/transactionUtils')
 
-module.exports=function(app){
-    app.get("/transaction/:id",async (req,res)=>{
+module.exports=function(app,auth){
+    app.get("/transaction/:id",auth,async (req,res)=>{
         try{
             console.log('here')
             let allTransaction= await transactionModel.getAll(req.params.id)

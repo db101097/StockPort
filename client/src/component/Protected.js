@@ -34,7 +34,7 @@ class auth extends Component{
             this.setState({authorized:'authorized'})
         }catch(err){
             console.log(err)
-            this.setState({authorized:'Not authorzied'})
+            this.setState({authorized:'Not authorized'})
         }
     }
 
@@ -49,9 +49,9 @@ class auth extends Component{
 
         else if(this.state.authorized==='Not authorized'){
             return (
-                <h1>
-                    Unauthorized , Please Log In
-                </h1>
+                <div>
+                    {this.props.login}
+                </div>
             )
         }
 

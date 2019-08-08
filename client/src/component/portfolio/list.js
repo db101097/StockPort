@@ -1,4 +1,4 @@
-import React,{ useState, useEffect } from 'react';
+import React,{ useState,useRef, useEffect } from 'react';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -8,6 +8,8 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import axios from 'axios'
+import Cookies from 'react-cookies'
+import Dollar from '../money/dollar'
 
 const StyledTableCell = withStyles(theme => ({
   head: {
@@ -49,8 +51,12 @@ async function getStocks(){
     try{
         const config ={ 
             method: 'get',
-            url: 'http://localhost:8080/stocks/51',
+            url: 'http://localhost:8080/stocks/'+Cookies.load('user'),
+            headers: {
+              Authorization: "Bearer " + Cookies.load('token')
+            }
         }
+        
         let res=await axios(config)
         let stocks=res.data
         console.log(stocks)
@@ -77,7 +83,7 @@ async function generateRows(){
             else{
               color='grey'
             }
-            rows.push(createData(stocks[i].ticker,stocks[i].shares,stocks[i].total,stocks[i].openPrice,stocks[i].currentPrice,stocks[i].profit))
+            rows.push(createData(stocks[i].ticker,stocks[i].shares,stocks[i].total,stocks[i].openPrice.toFixed(2),stocks[i].currentPrice.toFixed(2),stocks[i].profit.toFixed(2)))
         }
 
         rows.forEach(row=>{
@@ -90,17 +96,20 @@ async function generateRows(){
     }
 }
 
+let data=async(setRow)=>{
+  console.log('Calling for data')
+  let res=await generateRows()
+  setRow(res)
+}
+
 export default function CustomizedTables() {
   const classes = useStyles();
   const [row, setRow] = useState([]);
+  const didMountRef = useRef(false);
+  
   useEffect(() => {
-      let data=async()=>{
-          let res=await generateRows()  
-          setRow(res)
-      }
-      data()
+      data(setRow)
     },[]);
-    console.log('This is rows ',rows)
   return (
     <Paper className={classes.root}>
       <Table className={classes.table}>
@@ -115,20 +124,20 @@ export default function CustomizedTables() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map(row => (
-            <StyledTableRow key={row.ticker}>
+          {row.map(r => (
+            <StyledTableRow key={r.ticker}>
               <StyledTableCell component="th" scope="row">
               <font color={'green'}>
-                {row.ticker}
-              </font>`
+                {r.ticker}
+              </font>
               </StyledTableCell>
               <StyledTableCell align="right">
-              {row.shares}
+              {r.shares}
               </StyledTableCell>
-              <StyledTableCell align="right">$ {row.total}</StyledTableCell>
-              <StyledTableCell align="right">$ {row.openPrice}</StyledTableCell>
-              <StyledTableCell align="right">$ {row.currentPrice}</StyledTableCell>
-              <StyledTableCell align="right">$ {row.profit}</StyledTableCell>
+              <StyledTableCell align="right">$ {r.total}</StyledTableCell>
+              <StyledTableCell align="right">$ {r.openPrice}</StyledTableCell>
+              <StyledTableCell align="right">$ {r.currentPrice}</StyledTableCell>
+              <StyledTableCell align="right">$ {r.profit}</StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>

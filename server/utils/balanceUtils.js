@@ -12,7 +12,7 @@ const balanceModel=models.balance
 let retrieveBalance=async (userID)=>{
     try{
         let total=await balanceModel.findOne({where:{UserId:userID}})
-        console.log('total ',total)
+        //console.log('total ',total)
         if(total===null){
             throw 'Balance Unavailable'
         }

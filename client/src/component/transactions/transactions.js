@@ -33,7 +33,12 @@ export default function FullWidthGrid() {
         <Grid item xs={11} sm={11} md={11} lg={11}>
         <Toolbar>
                     <Typography variant="title" color="inherit">
-                        StockPort
+                        
+                    </Typography>
+        </Toolbar>
+        <Toolbar>
+                    <Typography variant="title" color="inherit">
+                       
                     </Typography>
         </Toolbar>
         </Grid>

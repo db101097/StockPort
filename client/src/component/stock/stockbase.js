@@ -7,7 +7,7 @@ import Searchbar from './searchBar'
 const useStyles = makeStyles(theme => ({
   root: {
     padding: theme.spacing(3, 2),
-    height: '60vw'
+    height: '100%'
   },
 }));
 

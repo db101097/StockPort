@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import axios from 'axios'
 import Ex from "../ex"
 import Button from '@material-ui/core/Button';
+import cookie from 'react-cookies'
 
 class StockSearch extends Component{
     constructor(props){

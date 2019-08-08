@@ -30,7 +30,7 @@ class SearchPage extends Component {
         }
         const config ={ 
             method: 'get',
-            url: 'https://api.iextrading.com/1.0/tops?symbols='+this.state.ticker
+            url: 'https://api.worldtradingdata.com/api/v1/stock?symbol='+this.state.ticker+'&api_token=tKd4GiDqziKoCWoyWvlX3aTCTMl6ByQN2w7R1UHH5OVTkt2o7NgPgxZtAgf2'
         }
 
         try{
@@ -42,9 +42,9 @@ class SearchPage extends Component {
                 console.log('error is ',this.state.error)
             }
             let stock= {
-                symbol:res.data[0].symbol,
-                price:res.data[0].askPrice,
-                size:res.data[0].askSize
+                symbol:res.data.data[0].symbol,
+                price:res.data.data[0].price,
+                size:res.data.data[0].shares
             }
             this.setState({getInfo:true,stock:stock,error:false})
             console.log(res)

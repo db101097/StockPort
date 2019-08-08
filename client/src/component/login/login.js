@@ -52,7 +52,7 @@ class login extends Component{
         
         if(this.state.authorized===true){
             return(
-                <Redirect to ="/home"> </Redirect>
+                <Redirect to ="/buy"> </Redirect>
             )
         }
 

@@ -3,7 +3,8 @@ import StockCard from './StockCard'
 import axios from 'axios';
 import Button from '@material-ui/core/Button';
 import { validate } from "@babel/types";
-
+import Cookies from 'react-cookies'
+import Alert from './Alert'
 class SearchPage extends Component {
     constructor(props){
         super(props)
@@ -11,7 +12,7 @@ class SearchPage extends Component {
             qty:0,
             getInfo:false,
             stock:'',
-            error:false 
+            status:'neutral'
         }
         this.handleInput= this.handleInput.bind(this)
         this.validate=this.validate.bind(this)
@@ -45,10 +46,13 @@ class SearchPage extends Component {
                 method: 'put',
                 url: 'http://localhost:8080/purchase',
                 data:{
-                    "id":51,
+                    "id":Cookies.load('user'),
                     "costPerShare":this.props.price,
                     "ticker":this.props.ticker,
                     "qty":Number(this.state.qty)
+                },
+                headers: {
+                    Authorization: "Bearer " + Cookies.load('token')
                 }
             }
             console.log("costPerShare ",this.props.price,
@@ -56,10 +60,9 @@ class SearchPage extends Component {
             "qty ",this.state.qty)
             let res=await axios(config)
             console.log('Purchase ',res)
-            alert('Success you copped those stocks')
         }catch(err){
             console.log(err)
-            alert('Failed to cop those stocks')
+            this.setState({status:'Failed'})
         }
     }
 
@@ -67,17 +70,50 @@ class SearchPage extends Component {
         e.preventDefault();
         try{
             this.makePurchase()
+            this.setState({status:'Success'})
         }catch(err){
             console.log(err)
             let e = {
                 status:true,
                 message:err
             }
-            this.setState({error:e})
+            this.setState({status:'Failed'})
         } 
     }
 
+    componentDidMount(){
+        this.setState({status:'neutral'})
+    }
+
     render(){
+        console.log('status is',this.state.status)
+        if(this.state.status==='Failed'){
+            return(
+                <div>
+                 <Alert message={"Failed To Purchase Stocks"} open={true} header={"Error"}/>
+                <form>
+                <input type="text" placeholder="Enter a Quantity" name="search" onChange={this.handleInput} />
+                <Button size="small" onClick={this.buy}>
+                     BUY
+                 </Button>
+                </form>
+                </div>
+            )
+        }
+        else if(this.state.status==='Success'){
+            return(
+                <div>
+                 <Alert message={"Purchase Completed"} open={true} header={"Success"}/>
+                <form>
+                <input type="text" placeholder="Enter a Quantity" name="search" onChange={this.handleInput} />
+                <Button size="small" onClick={this.buy}>
+                     BUY
+                 </Button>
+                </form>
+                </div>
+            )
+        }
+
             return(
                 <div>
                 <form>

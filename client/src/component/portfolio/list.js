@@ -30,6 +30,7 @@ const StyledTableRow = withStyles(theme => ({
 }))(TableRow);
 
 function createData(ticker,shares,total,openPrice,currentPrice,profit,color) {
+  console.log('Push happens')
   return { ticker,shares,total,openPrice,currentPrice,profit,color };
 }
 
@@ -59,7 +60,7 @@ async function getStocks(){
         
         let res=await axios(config)
         let stocks=res.data
-        console.log(stocks)
+        //console.log(stocks)
         return stocks
     }catch(err){
         console.log(err)
@@ -71,8 +72,10 @@ async function generateRows(){
     try{
 
         let stocks= await getStocks()
+        let rows= new Array()
         console.log('Stocks ',stocks)
         for(let i=0;i<stocks.length;i++){
+          console.log('i',i)
             let color;
             if(stocks[i].openPrice>stocks[i].currentPrice){
               color='red'
@@ -83,12 +86,9 @@ async function generateRows(){
             else{
               color='grey'
             }
-            rows.push(createData(stocks[i].ticker,stocks[i].shares,stocks[i].total,stocks[i].openPrice.toFixed(2),stocks[i].currentPrice.toFixed(2),stocks[i].profit.toFixed(2)))
+            rows.push(createData(stocks[i].ticker,stocks[i].shares,stocks[i].total,stocks[i].openPrice.toFixed(2),stocks[i].currentPrice.toFixed(2),stocks[i].profit.toFixed(2),color))
         }
-
-        rows.forEach(row=>{
-            console.log('Row ',row)
-        })
+        console.log('got rows',rows.length)
         return rows
     }catch(err){
         console.log(err)
@@ -108,8 +108,11 @@ export default function CustomizedTables() {
   const didMountRef = useRef(false);
   
   useEffect(() => {
+    console.log('row ',row.length)
+    if(row.length===0){
       data(setRow)
-    },[]);
+    }
+    },[row.length]);
   return (
     <Paper className={classes.root}>
       <Table className={classes.table}>
@@ -127,7 +130,7 @@ export default function CustomizedTables() {
           {row.map(r => (
             <StyledTableRow key={r.ticker}>
               <StyledTableCell component="th" scope="row">
-              <font color={'green'}>
+              <font color={r.color}>
                 {r.ticker}
               </font>
               </StyledTableCell>

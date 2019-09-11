@@ -125,10 +125,10 @@ export default function PersistentDrawerLeft() {
   useEffect(() => {
       let data=async()=>{
           let res=await getBalance()
-          setBalance(<Dollar value={res}/>)
+          setBalance(Number(res).toFixed(2))
       }
       data()
-},[]);
+  },[]);
 
   if(redirect===true){
       return(
@@ -187,7 +187,7 @@ export default function PersistentDrawerLeft() {
         </div>
         <Divider />
         <List>
-          {['Buy', 'Portfolio', 'Transactions'].map((text, index) => (
+          {['Buy', 'Portfolio', 'Transactions','Logout'].map((text, index) => (
             <ListItem button key={text}
                       onClick={(event) => handleRedirect('/'+text)}
             >

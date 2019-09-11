@@ -13,6 +13,7 @@ class SearchPage extends Component {
             error:false 
         }
         this.handleInput= this.handleInput.bind(this)
+        this.findStock=this.findStock.bind(this)
     }
 
     handleInput= (event) => {
@@ -30,13 +31,13 @@ class SearchPage extends Component {
         }
         const config ={ 
             method: 'get',
-            url: 'https://api.worldtradingdata.com/api/v1/stock?symbol='+this.state.ticker+'&api_token=tKd4GiDqziKoCWoyWvlX3aTCTMl6ByQN2w7R1UHH5OVTkt2o7NgPgxZtAgf2'
+            url: 'https://api.worldtradingdata.com/api/v1/stock?symbol='+this.state.ticker+'&api_token=EUHpHVVmsOsRO3rPWAc3Nojx9adXGbQorHOZnyHfT37IEWW0Ri9WjM2OGFWq'
         }
 
         try{
             let res=await axios(config)
             console.log(res)
-            if(res.data.length<1){
+            if(res.data.length<1  || res.data.data===undefined){
                 console.log('bad data')
                 this.setState({getInfo:true,error:true})
                 console.log('error is ',this.state.error)
@@ -59,7 +60,7 @@ class SearchPage extends Component {
                 if(this.state.error===true){
                     return(
                         <div>
-                        <form>
+                        <form onSubmit={this.findStock}>
                         <input type="text" placeholder="Enter a Ticker Name" name="search" onChange={this.handleInput} />
                         <Button size="small" onClick={this.findStock}>
                             Find
@@ -72,8 +73,8 @@ class SearchPage extends Component {
 
                     return(
                         <div>
-                        <form>
-                        <input type="text" placeholder="Enter a Ticker Name" name="search" onChange={this.handleInput} />
+                        <form onSubmit={this.findStock}>
+                        <input type="text" placeholder="Enter a Ticker Name" name="search" onChange={this.handleInput}/>
                         <Button size="small" onClick={this.findStock}>
                             Find
                         </Button>
@@ -86,8 +87,8 @@ class SearchPage extends Component {
 
             return(
                 <div>
-                <form>
-                <input type="text" placeholder="Enter a Ticker Name" name="search" onChange={this.handleInput} />
+                <form onSubmit={this.findStock}>
+                <input type="text" placeholder="Enter a Ticker Name" name="search" onChange={this.handleInput}/>
                 <Button size="small" onClick={this.findStock}>
                             Find
                 </Button>

@@ -18,7 +18,7 @@ let getAllStocks= async (userId)=>{
 
 let getOpeningPrice=async(ticker)=>{
     try{
-        let res=await axios.get('https://api.worldtradingdata.com/api/v1/stock?symbol='+ticker+'&api_token=tKd4GiDqziKoCWoyWvlX3aTCTMl6ByQN2w7R1UHH5OVTkt2o7NgPgxZtAgf2')
+        let res=await axios.get('https://api.worldtradingdata.com/api/v1/stock?symbol='+ticker+'&api_token=EUHpHVVmsOsRO3rPWAc3Nojx9adXGbQorHOZnyHfT37IEWW0Ri9WjM2OGFWq')
         let stocks = res.data.data
         if(stocks===undefined){
             console.log('here')
@@ -43,7 +43,7 @@ let createRow=async (stock,openPrice,currentPrice)=>{
         total:stock.total,
         openPrice:openPrice,
         currentPrice:currentPrice,
-        profit:(stock.shares*currentPrice)-stock.total
+        profit:(+(stock.shares*currentPrice).toFixed(2))-stock.total
     }
 }
 

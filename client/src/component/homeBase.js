@@ -5,7 +5,6 @@ import Grid from '@material-ui/core/Grid';
 import Panel from './panel'
 import Stocks from './stock/StockSearch'
 import Balance from './balance/balance';
-import Ex from './ex';
 import Navbar from './Navbar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
@@ -63,9 +62,6 @@ export default function FullWidthGrid() {
         </Grid>
         <Grid item xs={3} sm={3} md={3} lg={3}>
           <Panel/>
-        </Grid>
-        <Grid item xs={5} sm={5} md={5} lg={4}>
-          <Ex/>
         </Grid>
         <Grid item xs={3} sm={3} md={3} lg={3}>
           <Balance/>

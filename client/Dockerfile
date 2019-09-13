@@ -8,4 +8,4 @@ COPY package*.json ./
 
 EXPOSE 3000
 
-CMD [ "npm", "start" ]
+CMD [ "npm", "install","npm","start" ]

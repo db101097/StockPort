@@ -15,7 +15,7 @@ class Balance extends Component{
         console.log(cookie.load('token'))
         const config ={ 
             method: 'get',
-            url: 'http://localhost:8080/balance/'+cookie.load('user'),
+            url: 'https://stockportapp.herokuapp.com/balance/'+cookie.load('user'),
             headers: {
                 Authorization: "Bearer " + cookie.load('token')
             }

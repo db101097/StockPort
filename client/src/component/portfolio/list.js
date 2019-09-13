@@ -52,7 +52,7 @@ async function getStocks(){
     try{
         const config ={ 
             method: 'get',
-            url: 'http://localhost:8080/stocks/'+Cookies.load('user'),
+            url: 'https://stockportapp.herokuapp.com/stocks/'+Cookies.load('user'),
             headers: {
               Authorization: "Bearer " + Cookies.load('token')
             }

@@ -18,7 +18,7 @@ const getData=async()=>{
     try{
         const config={
             method: 'get',
-            url: 'http://localhost:8080/transaction/'+cookie.load('user'),
+            url: 'https://stockportapp.herokuapp.com/transaction/'+cookie.load('user'),
             headers: {
               Authorization: "Bearer " + cookie.load('token')
             }

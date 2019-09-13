@@ -17,19 +17,6 @@ class StockSearch extends Component{
         }
     }
 
-    async componentDidMount(){
-        const config ={ 
-            method: 'get',
-            url: 'http://localhost:8080/balance/50'
-        }
-
-        try{
-            let res=await axios(config)
-            this.setState({balance:'$'+res.data.Balance})
-        }catch(err){
-            this.setState({error:"Info not valid"})
-        }
-    }
 
     render(){
         return (

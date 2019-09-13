@@ -29,7 +29,7 @@ class login extends Component{
         e.preventDefault();
         const config ={ 
             method: 'post',
-            url: 'http://localhost:8080/login',
+            url: 'https://stockportapp.herokuapp.com/login',
             data: {
                 email:this.state.email,
                 password:this.state.password,

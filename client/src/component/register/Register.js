@@ -38,7 +38,7 @@ class Register extends Component{
 
         const config ={ 
             method: 'post',
-            url: 'http://localhost:8080/register',
+            url: 'https://stockportapp.herokuapp.com/register',
             data: {
                 firstName: this.state.firstName,
                 lastName: this.state.lastName,

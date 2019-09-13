@@ -23,7 +23,7 @@ class auth extends Component{
         console.log(cookie.load('token'))
         const config ={ 
             method: 'get',
-            url: 'http://localhost:8080/auth/',
+            url: 'https://stockportapp.herokuapp.com/auth/',
             headers: {
                 Authorization: "Bearer " + cookie.load('token')
             }

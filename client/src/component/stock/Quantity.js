@@ -44,7 +44,7 @@ class SearchPage extends Component {
         try{
             const config ={ 
                 method: 'put',
-                url: 'http://localhost:8080/purchase',
+                url: 'https://stockportapp.herokuapp.com/purchase',
                 data:{
                     "id":Cookies.load('user'),
                     "costPerShare":this.props.price,

@@ -1,0 +1,22 @@
+version: "2"
+services:
+    frontend:
+        container_name: stockportfe
+        build:
+            context: ./client
+            dockerfile: Dockerfile
+        image: sp/stockportfe
+        ports:
+            - "3000:3000"
+        volumes:
+            - ./client:/usr/src/app
+    backend:
+        container_name: stockportbe
+        build:
+            context: ./server
+            dockerfile: Dockerfile
+        image: sp/stockportbe
+        ports:
+            - "8080:8080"
+        volumes:
+            - ./server:/usr/src/app

@@ -24,9 +24,7 @@ class SearchPage extends Component {
     
     findStock = async (e)=>{
         e.preventDefault();
-        console.log('ticker ',this.state.ticker.length)
         if(this.state.ticker.length===0){
-            console.log('here')
             return;
         }
         const config ={ 
@@ -36,11 +34,8 @@ class SearchPage extends Component {
 
         try{
             let res=await axios(config)
-            console.log(res)
             if(res.data.length<1  || res.data.data===undefined){
-                console.log('bad data')
                 this.setState({getInfo:true,error:true})
-                console.log('error is ',this.state.error)
             }
             let stock= {
                 symbol:res.data.data[0].symbol,
@@ -48,7 +43,6 @@ class SearchPage extends Component {
                 size:res.data.data[0].shares
             }
             this.setState({getInfo:true,stock:stock,error:false})
-            console.log(res)
         }catch(err){
             this.setState({error:true})
         }

@@ -24,7 +24,6 @@ const getData=async()=>{
             }
         }
         let res=await Axios(config)
-        console.log(res)
         return {
           status:true,
           data:res.data
@@ -45,7 +44,6 @@ const generateList=async()=>{
     }
     else{
       let all= new Array()
-      console.log('data is this long ',transactions.data.length)
       for(let i=0;i<transactions.data.length;i++){
         let t=transactions.data[i]
         all.push(<ExpansionPanel 
@@ -70,8 +68,6 @@ export default function PaperSheet() {
   //axios call to get all transactions
 
   useEffect(() => {
-      console.log('Length of list',list.length)
-        console.log('here')
         let data=async()=>{
             let res=await generateList()
             setList(res)

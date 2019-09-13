@@ -35,7 +35,6 @@ export default function ControlledExpansionPanels(props) {
   const handleChange = panel => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
-  console.log('Lengggggttthhh ',props.panel.length)
   return (
     <div className={classes.root}>
       {props.panel.map(pan =>pan)}

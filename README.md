@@ -5,7 +5,7 @@ This is a fullstack stock portfolio app.
 
 With this project the users can sign up for accounts and then login to buy stocks,monitor their transactions and show a portfolio of stocks
 
-Check it out at : https://stockportapp.herokuapp.com
+Check it out at : https://stockport-ttp.herokuapp.com
 
 ## How to run 
 

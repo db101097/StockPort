@@ -11,12 +11,12 @@ Check it out at : https://stockport-ttp.herokuapp.com
 
 The project is separated into client and server folders
 
-To run client:
+###To run client:
 
 Simply switch to the client folder from the root directory with 'cd client' and the run 'npm start'
 This will boot the react app
 
-To run the backend:
+###To run the backend:
 
 Simply switch to the server folder from the root directory with 'cd server' and then run 'npm run dev'
 This will spin up the express server
